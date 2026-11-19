@@ -1,6 +1,6 @@
 {
   "name": "secrets",
-  "version": "0.0.0",
+  "version": "0.1.0-beta",
   "private": true,
   "type": "module",
   "description": "Envia segredos ao provedor (Cloudflare Workers e outros) sem nunca imprimir valores: compara o arquivo local com impressões argon2id de um registro versionado, detecta troca feita fora e só envia o que mudou. Provedor, origem, registro e hash são peças trocáveis.",
