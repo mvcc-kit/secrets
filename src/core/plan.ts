@@ -82,7 +82,7 @@ export function buildPlan(input: PlanInput): SecretsPlan {
 
   if (!input.hasKey)
     problems.push(
-      `${FINGERPRINT_KEY_NAME} ausente ou inválida (64 caracteres hexadecimais; fica só no arquivo local e nunca vai ao provedor). Gere uma com: bun -e "import { generateFingerprintKey } from 'secrets'; console.log(generateFingerprintKey())"`,
+      `${FINGERPRINT_KEY_NAME} ausente ou inválida (64 caracteres hexadecimais; fica só no arquivo local e nunca vai ao provedor). Gere uma com: openssl rand -hex 32`,
     )
   else if (!input.keyMatches)
     warnings.push(`${FINGERPRINT_KEY_NAME} não é a mesma do registro: nenhum valor pode ser conferido. Reenvie os segredos para registrar com a chave atual.`)

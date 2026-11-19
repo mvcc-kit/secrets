@@ -3,7 +3,7 @@
 Uma versão é uma tag no GitHub, com uma release que diz o que mudou. Quem usa instala assim, sem npm:
 
 ```json
-{ "dependencies": { "secrets": "github:mvcc-kit/secrets#v0.1.0-beta" } }
+{ "dependencies": { "@mvcc-kit/secrets": "github:mvcc-kit/secrets#v0.1.0-beta" } }
 ```
 
 ## As regras
@@ -22,7 +22,8 @@ Uma versão é uma tag no GitHub, com uma release que diz o que mudou. Quem usa 
 5. **Só publique o que foi testado em um projeto real.** A versão nova entra no app antes de receber outra por cima.
 6. **Tag publicada não muda nem é apagada.** Versão ruim se corrige com a seguinte.
 7. **Só o comando cria tag.** Nada de `git tag` à mão.
-8. **Nada privado no repositório.** Ele é público, inclusive o histórico: nome de cliente, caminho de outro projeto e segredo ficam de fora.
+8. **Nome com escopo, sempre `@mvcc-kit/<nome>`.** Nome sem escopo pode existir no npm: fora do projeto, o Bun instalaria e rodaria o pacote de um estranho.
+9. **Nada privado no repositório.** Ele é público, inclusive o histórico: nome de cliente, caminho de outro projeto e segredo ficam de fora.
 
 O comando recusa número errado e notas sem título ou sem itens.
 

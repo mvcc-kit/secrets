@@ -31,6 +31,13 @@ describe('camadas', () => {
   })
 })
 
+describe('nome e instalação', () => {
+  it('nome com escopo (sem escopo, o npm tem outro pacote) e sem instalação automática', () => {
+    expect(pkg.name.startsWith('@mvcc-kit/')).toBe(true)
+    expect(read('bunfig.toml')).toMatch(/\[install\][^[]*auto\s*=\s*"disable"/)
+  })
+})
+
 describe('entradas públicas', () => {
   it('toda entrada de exports existe e importa', async () => {
     for (const [entry, file] of Object.entries(pkg.exports)) {

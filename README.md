@@ -3,9 +3,9 @@
 Envia segredos ao provedor (Cloudflare Workers hoje; outros por adaptador) sem nunca imprimir valores. Compara o `.env` local com impressões argon2id guardadas num registro versionado no Git, detecta troca feita fora (painel, outro comando) e só envia o que mudou ou falta. Zero dependência em tempo de execução.
 
 ```ts
-import { createSecretsManager, FINGERPRINT_KEY_NAME, generateFingerprintKey, memoryProvider, memoryRegistry } from 'secrets'
-import { bunArgon2 } from 'secrets/hashers/bun'
-import { envObject } from 'secrets/sources/env-file'
+import { createSecretsManager, FINGERPRINT_KEY_NAME, generateFingerprintKey, memoryProvider, memoryRegistry } from '@mvcc-kit/secrets'
+import { bunArgon2 } from '@mvcc-kit/secrets/hashers/bun'
+import { envObject } from '@mvcc-kit/secrets/sources/env-file'
 
 const manager = createSecretsManager({
   environment: 'production',
@@ -29,7 +29,7 @@ await manager.push(context, context.plan.offer)
 ## Instalar
 
 ```json
-{ "dependencies": { "secrets": "github:mvcc-kit/secrets#v0.1.0-beta" } }
+{ "dependencies": { "@mvcc-kit/secrets": "github:mvcc-kit/secrets#v0.1.1-beta" } }
 ```
 
 ## Documentação

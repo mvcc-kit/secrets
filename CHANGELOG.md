@@ -2,6 +2,17 @@
 
 As versões seguem [RELEASING.md](RELEASING.md). Mudança de quebra é permitida no beta e sempre aparece em "Mudanças de quebra".
 
+## 0.1.1-beta (19/11/2026)
+
+### Segurança
+
+- A chave de impressão se gera com `openssl rand -hex 32`, sem importar pacote. O comando antigo (`bun -e "import ... from 'secrets'"`), rodado fora do projeto, fazia o Bun baixar e executar o pacote `secrets` do npm, que é de outra pessoa.
+- `bunfig.toml` com `install.auto = "disable"`: o Bun nunca instala pacote sozinho neste repositório.
+
+### Mudanças de quebra
+
+- O pacote agora se chama `@mvcc-kit/secrets` (o nome `secrets` existe no npm). Troque a dependência para `"@mvcc-kit/secrets": "github:mvcc-kit/secrets#v0.1.1-beta"` e os imports de `'secrets'` e `'secrets/...'` para `'@mvcc-kit/secrets'` e `'@mvcc-kit/secrets/...'`.
+
 ## 0.1.0-beta (19/11/2026)
 
 ### Adicionado

@@ -28,7 +28,7 @@ Quatro peças trocáveis; o núcleo não conhece nenhuma:
 Pelo GitHub, fixado numa tag (nunca num branch):
 
 ```json
-{ "dependencies": { "secrets": "github:mvcc-kit/secrets#v0.1.0-beta" } }
+{ "dependencies": { "@mvcc-kit/secrets": "github:mvcc-kit/secrets#v0.1.1-beta" } }
 ```
 
 ## Usar num projeto (Cloudflare Workers)
@@ -40,12 +40,12 @@ Arquivos do projeto:
 
 ```ts
 // exemplo: só tipos
-import { createSecretsManager } from 'secrets'
-import { runCli } from 'secrets/cli'
-import { bunArgon2 } from 'secrets/hashers/bun'
-import { cloudflareWorker } from 'secrets/providers/cloudflare'
-import { jsonRegistry } from 'secrets/registries/json-file'
-import { envFile } from 'secrets/sources/env-file'
+import { createSecretsManager } from '@mvcc-kit/secrets'
+import { runCli } from '@mvcc-kit/secrets/cli'
+import { bunArgon2 } from '@mvcc-kit/secrets/hashers/bun'
+import { cloudflareWorker } from '@mvcc-kit/secrets/providers/cloudflare'
+import { jsonRegistry } from '@mvcc-kit/secrets/registries/json-file'
+import { envFile } from '@mvcc-kit/secrets/sources/env-file'
 
 const root = new URL('..', import.meta.url).pathname
 const manager = createSecretsManager({
@@ -66,10 +66,10 @@ const manager = createSecretsManager({
 process.exitCode = await runCli(manager, Bun.argv.slice(2)) // check | push [--names=A,B] [--unlock=A] [--yes]
 ```
 
-Gerar a chave do ambiente (uma vez por ambiente; guarde no `.env.<ambiente>`):
+Gerar a chave do ambiente (uma vez por ambiente; guarde no `.env.<ambiente>`). Sem importar pacote nenhum, então não depende de onde o comando roda:
 
 ```sh
-bun -e "import { generateFingerprintKey } from 'secrets'; console.log(generateFingerprintKey())"
+openssl rand -hex 32
 ```
 
 No `cloudflareWorker`, o envio cria uma versão do Worker **sem tráfego** com os segredos novos (`wrangler versions secret bulk`); o deploy seguinte herda os segredos dela. O deploy precisa publicar com `wrangler deploy --tag <commit>`: versão sem marca é tratada como troca de fora. O Worker precisa existir antes do primeiro envio (`TargetMissingError`): publique uma vez antes.
@@ -78,7 +78,7 @@ No `cloudflareWorker`, o envio cria uma versão do Worker **sem tráfego** com o
 
 ```ts
 // exemplo: só tipos
-import { planReport, TargetMissingError, type SecretsManager } from 'secrets'
+import { planReport, TargetMissingError, type SecretsManager } from '@mvcc-kit/secrets'
 
 declare const manager: SecretsManager
 declare function firstDeploy(): Promise<void>
@@ -111,9 +111,9 @@ Bloqueiam o envio: chave de impressão ausente, obrigatório faltando, valor loc
 ## Exemplo completo (em memória)
 
 ```ts
-import { createSecretsManager, FINGERPRINT_KEY_NAME, generateFingerprintKey, memoryProvider, memoryRegistry } from 'secrets'
-import { bunArgon2 } from 'secrets/hashers/bun'
-import { envObject } from 'secrets/sources/env-file'
+import { createSecretsManager, FINGERPRINT_KEY_NAME, generateFingerprintKey, memoryProvider, memoryRegistry } from '@mvcc-kit/secrets'
+import { bunArgon2 } from '@mvcc-kit/secrets/hashers/bun'
+import { envObject } from '@mvcc-kit/secrets/sources/env-file'
 
 const provider = memoryProvider('memory:demo')
 const registry = memoryRegistry()
@@ -161,7 +161,7 @@ console.assert(outside.plan.warnings.some((w) => w.includes('FORA desta ferramen
 Um provedor novo é um arquivo que implementa `Provider`: `target` estável (vai no registro), `listNames()`, `push(values, meta)` devolvendo a versão criada e, se o provedor tiver histórico, `listVersions()` com `origin: 'tool' | 'outside'` (sem ele, o plano avisa que troca de fora não é detectada). Use `memoryProvider` (`src/providers/memory.ts`) como molde e a bateria de `tests/manager.test.ts` para conferir.
 
 ```ts
-import type { Provider } from 'secrets'
+import type { Provider } from '@mvcc-kit/secrets'
 
 // Molde: guarda em memória. Um provedor real chamaria a API (nunca devolvendo valores).
 export function myProvider(): Provider {

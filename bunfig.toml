@@ -1,3 +1,7 @@
 [test]
 # Testes nunca dependem do relógio; o limite pega teste preso (sqld que não sobe).
 timeout = 20000
+
+[install]
+# Nunca instalar pacote sozinho: um import fora do projeto baixaria um pacote do npm com o mesmo nome.
+auto = "disable"

@@ -1,5 +1,5 @@
 {
-  "name": "secrets",
+  "name": "@mvcc-kit/secrets",
   "version": "0.1.0-beta",
   "private": true,
   "type": "module",
