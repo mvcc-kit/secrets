@@ -1,0 +1,27 @@
+{
+  "name": "secrets",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Envia segredos ao provedor (Cloudflare Workers e outros) sem nunca imprimir valores: compara o arquivo local com impressões argon2id de um registro versionado, detecta troca feita fora e só envia o que mudou. Provedor, origem, registro e hash são peças trocáveis.",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/index.ts",
+    "./cli": "./src/cli.ts",
+    "./providers/cloudflare": "./src/providers/cloudflare.ts",
+    "./sources/env-file": "./src/sources/env-file.ts",
+    "./registries/json-file": "./src/registries/json-file.ts",
+    "./hashers/bun": "./src/hashers/bun.ts"
+  },
+  "scripts": {
+    "test": "bun test",
+    "typecheck": "tsc --noEmit -p .",
+    "docs": "bun scripts/docs.ts",
+    "leak-check": "bun scripts/leak-check.ts",
+    "release": "bun scripts/release.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "1.4.2",
+    "typescript": "5.9.2"
+  }
+}

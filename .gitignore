@@ -1,0 +1,7 @@
+node_modules/
+.cache/
+.DS_Store
+*.db
+*.db-*
+# Palavras privadas para o scripts/leak-check.ts (uma por linha). Nunca vai para o Git.
+.private-words

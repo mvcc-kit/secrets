@@ -1,0 +1,3 @@
+[test]
+# Testes nunca dependem do relógio; o limite pega teste preso (sqld que não sobe).
+timeout = 20000
